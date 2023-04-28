@@ -1,10 +1,3 @@
-//
-// Create by 青杉白衣 on 2022-11-5
-//
-
-/// @author 青衫白衣
-/// @date 2022-11-5
-
 #include "coremem.hh"
 
 #ifndef COREMEM
