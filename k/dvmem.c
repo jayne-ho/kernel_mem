@@ -2,15 +2,43 @@
 #include "mem.h"
 #include "maps.h"
 
-static inline struct mm_struct *get_task_mm_by_vpid(pid_t nr)
-{
-	struct task_struct *task;
+#include <linux/fs.h>
+#include <linux/mm.h> 
 
-	task = pid_task(find_vpid(nr), PIDTYPE_PID);
-	if (!task)
-		return NULL;
-	
-	return get_task_mm(task);
+struct mm_struct *get_mm_by_task_files(pid_t pid)
+{
+    struct mm_struct *mm = NULL;
+    char task_dir[128];
+    char self_file[128];
+    struct file *file;
+    struct inode *inode;
+
+    sprintf(task_dir, "/proc/%d/task", pid);
+    dir = opendir(task_dir);
+    if (!dir) 
+        return NULL;
+
+    while ((f = readdir(dir)) != NULL) {
+        if (!strcmp(f->d_name, ".")) 
+            continue;
+        if (!strcmp(f->d_name, ".."))
+            continue;
+
+        sprintf(self_file, "%s/%s/self", task_dir, f->d_name);
+        file = filp_open(self_file, O_RDONLY, 0);
+        if (IS_ERR(file))  
+            continue;
+
+        inode = file_inode(file); 
+        /* 获取task_struct */
+        task = CONTAINER_OF(inode, struct task_struct, thread_self);
+        mm = get_task_mm(task);
+        break;
+    }
+    closedir(dir);
+    filp_close(file, NULL);
+
+    return mm; 
 }
 
 static inline ssize_t mem_tool_rw_core(const char __user *buf, size_t (*mem_fn)(size_t , char *, size_t, pte_t *))
@@ -28,12 +56,8 @@ static inline ssize_t mem_tool_rw_core(const char __user *buf, size_t (*mem_fn)(
 
 	if (copy_from_user(process_rw_data, buf, sizeof(struct mem_process_rw)) != 0)
 		return -EFAULT;
-	
-	task = pid_task(find_vpid(process_rw_data->pid), PIDTYPE_PID);
-	if (!task)
-		return -EFAULT;	
 
-	mm = get_task_mm(task);
+	mm = get_mm_by_task_files(task);
 	if (!mm)
 		return -EFAULT;
 	
