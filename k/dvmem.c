@@ -2,10 +2,7 @@
 #include "mem.h"
 #include "maps.h"
 
-#include <linux/fs.h>
-#include <linux/mm.h> 
-
-struct mm_struct *get_mm_by_task_files(pid_t pid)
+struct mm_struct *get_task_mm_by_vpid(pid_t pid)
 {
     struct mm_struct *mm = NULL;
     char task_dir[128];
