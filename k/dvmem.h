@@ -5,6 +5,7 @@
 #include <linux/module.h>
 #include <linux/cdev.h>
 #include <linux/fs.h>
+#include <linux/mm.h> 
 #include <linux/slab.h>
 #include <linux/device.h>
 #include <linux/sched/mm.h>
