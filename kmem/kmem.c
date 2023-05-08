@@ -1,4 +1,4 @@
-#include "dvmem.h"
+#include "kmem.h"
 #include "mem.h"
 #include "maps.h"
 
