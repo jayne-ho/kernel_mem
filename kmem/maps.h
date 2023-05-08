@@ -8,7 +8,7 @@
 #include <linux/seq_file.h>
 #include <linux/sched/mm.h>
 
-#include "dvmem.h"
+#include "kmem.h"
 
 const char *__arch_vma_name(struct vm_area_struct *vma)
 {
