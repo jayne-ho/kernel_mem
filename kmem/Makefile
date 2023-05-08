@@ -1,4 +1,4 @@
-MODULE_NAME := kmem
+MODULE_NAME := kernelMem
 RESMAN_CORE_OBJS:=kmem.o
 RESMAN_GLUE_OBJS:=
 ifneq ($(KERNELRELEASE),)    
