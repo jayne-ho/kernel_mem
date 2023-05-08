@@ -1,9 +1,9 @@
-MODULE_NAME := kdvmem
-RESMAN_CORE_OBJS:=dvmem.o
+MODULE_NAME := kmem
+RESMAN_CORE_OBJS:=kmem.o
 RESMAN_GLUE_OBJS:=
 ifneq ($(KERNELRELEASE),)    
 	$(MODULE_NAME)-objs:=$(RESMAN_GLUE_OBJS) $(RESMAN_CORE_OBJS)
-	obj-m := kdvmem.o
+	obj-m := kernelMem.o
 else
 	KDIR := ~/sm8150/android_kernel_xiaomi_sm8150/out
 all:
