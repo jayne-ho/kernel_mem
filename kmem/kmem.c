@@ -182,5 +182,6 @@ static void __exit dev_mem_tool_exit(void)
 
 
 module_exit(dev_mem_tool_exit);
-
+MODULE_AUTHOR("Jayne");
+MODULE_DESCRIPTION("通过内核读取物理内存");
 MODULE_LICENSE("GPL");
