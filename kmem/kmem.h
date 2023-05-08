@@ -11,7 +11,7 @@
 #include <linux/kallsyms.h>
 #include <linux/kprobes.h>
 
-#define DEV_FILE_NAME "dvmem"
+#define DEV_FILE_NAME "kmem"
 
 struct mem_tool_device {
 	struct cdev cdev;
